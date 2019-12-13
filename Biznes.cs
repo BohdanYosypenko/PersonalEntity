@@ -23,7 +23,7 @@ namespace Enti
 
         public void Add()
         {
-
+            
 
             newEmploee = new Emploee() as T;
 
@@ -72,15 +72,16 @@ namespace Enti
 
         public void DeleteAll()
         {
-
-            var emploeesDb = db.Emploees.ToList();
-            foreach (Emploee e in emploeesDb)
+            try
             {
-                e.Id = 0;
-                db.Emploees.Remove(e);
-                db.SaveChanges();
 
+                db.Database.EnsureDeleted();
+                using (helloappdbContext db = new helloappdbContext())
+                {
+                    db.Database.EnsureCreated();
+                }
             }
+            catch { throw new Exception("База даних відсутня"); }
 
 
         }
@@ -101,7 +102,7 @@ namespace Enti
 
         public void Edit(int id)
         {
-
+           
             T emploee = FindEmploeeDB(id);
             if (emploee == null)
                 throw new Exception("Рахунок не знайдено");

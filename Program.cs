@@ -117,7 +117,7 @@ namespace Enti
             {
                 Console.WriteLine("Оберіть дію");
                 Console.WriteLine("1. Видалити працівника по Id\n" +
-                    "2. Видалити усіх працівників\n" +
+                    "2. Очистити базу працівників\n" +
                     "3. Повернутись до меню");
                 int z = Convert.ToInt32(Console.ReadLine());
                 if (z == 1)
@@ -130,6 +130,7 @@ namespace Enti
                 {
                     biznes.DeleteAll();
                     Console.WriteLine("Видалено Всіх працівників");
+                    aliva = false;
 
                 }
                 else
