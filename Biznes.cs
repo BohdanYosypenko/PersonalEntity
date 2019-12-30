@@ -1,16 +1,20 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Enti
 {
+    
+
     public class Biznes<T> where T : Emploee
     {
 
-        helloappdbContext db = new helloappdbContext();
 
+        helloappdbContext db = new helloappdbContext();
 
         public string Name { get; private set; }
 
@@ -85,10 +89,10 @@ namespace Enti
 
 
         }
-        public void DeleteDb(int id)
+        public async void DeleteDb(int id)
         {
 
-            Emploee emploee1 = FindEmploeeDB(id);
+            Emploee emploee1 = await FindEmploeeDBAsync(id);
             if (emploee1 == null)
                 throw new Exception("Рахунок не знайдено");
             else
@@ -100,10 +104,10 @@ namespace Enti
         }
 
 
-        public void Edit(int id)
+        public async void Edit(int id)
         {
            
-            T emploee = FindEmploeeDB(id);
+            Emploee emploee = await FindEmploeeDBAsync(id);
             if (emploee == null)
                 throw new Exception("Рахунок не знайдено");
             Console.WriteLine("Виберіть номер інформацї яку потрібно змінити");
@@ -187,9 +191,9 @@ namespace Enti
 
         }
 
-        public void Show(int id)
+        public async void Show(int id)
         {
-            Emploee emploee = FindEmploeeDB(id);
+            Emploee emploee = await FindEmploeeDBAsync(id);
             if (emploee == null)
                 throw new Exception("Рахунок не знайдено");
             Emploee[] ep = new Emploee[] { emploee };
@@ -197,19 +201,13 @@ namespace Enti
 
         }
 
-        public T FindEmploeeDB(int id)
+        public async Task<Emploee> FindEmploeeDBAsync(int id)
         {
 
 
-            List<Emploee> emploeesDb = db.Emploees.ToList();
+            Emploee findEmpl = await Task.Run(()=> db.Emploees.FirstOrDefaultAsync(e => e.Id == id));
 
-            for (int i = 0; i < emploeesDb.Count; i++)
-            {
-                if (emploeesDb[i].Id == id)
-                    return (T)emploeesDb[i];
-
-            }
-            return null;
+            return findEmpl;
 
         }
 
