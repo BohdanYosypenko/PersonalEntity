@@ -16,17 +16,14 @@ namespace Enti
 
             while (alive)
             {
-                ConsoleColor color = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("1. Додати працівника \n2. Редагувати працівника \n3. Показати працівників \n4. Видалити працівника \n5. Завершити роботу");
-                Console.ForegroundColor = color;
-
-
-
+                
+                    ConsoleColor color = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine("1. Додати працівника \n2. Редагувати працівника \n3. Показати працівників \n4. Видалити працівника \n5. Завершити роботу");
+                    Console.ForegroundColor = color;
                 try
                 {
-
-                    int number = Convert.ToInt32(Console.ReadLine());
+                    int number = Convert.ToInt32(Console.ReadLine());                                                 
 
                     switch (number)
                     {
@@ -64,7 +61,7 @@ namespace Enti
         {
             Console.WriteLine("Введіть Id працівника, якого потрібно редагувати");
             int id = Convert.ToInt32(Console.ReadLine());
-
+            biznes.Show(id);
             biznes.Edit(id);
         }
         private static void ShowEmploee(Biznes<Emploee> biznes)
@@ -73,7 +70,7 @@ namespace Enti
             {
                 Emploee[] emploees = db.Emploees.ToArray();
                 biznes.ShowAll(emploees);
-            bool alive = true;
+                bool alive = true;
                 while (alive)
                 {
                     Console.WriteLine("1. Пошук працівника \n2. Повернутися до головного меню");
